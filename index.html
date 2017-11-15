@@ -1,0 +1,212 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+			*{
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				min-width: 1080px;
+				font-size: 0;
+			}
+			.cell {
+				fill:#fff;
+				stroke:none;
+				cursor: move;
+				z-index: 2;
+				-webkit-user-select: none;
+			    -moz-user-select: none;
+			    user-select: none;
+			}
+			.cell-border {
+				fill:#fff;
+				stroke:#2083cf;
+				width:220;
+				height:40;
+				stroke-width:1;
+				rx:20;
+				ry:20;
+			}
+			.cell:hover .cell-border {
+				fill: #e7f5ff;
+			}
+			.cell-text {
+				font-size:14;
+				fill:#333;
+			    transform: matrix(1,0,0,1,110,20);
+			    text-anchor: middle;
+			    dominant-baseline: middle;
+			}
+			.cell-opera {
+				fill: #36a7fd;
+    			rx: 20;
+    			x:185;
+    			y:5;
+    			width:30;
+    			height:30;
+			}
+			.cell-opera-text {
+				font-size: 12px;
+    			fill: #fff;
+    			cursor: pointer;
+			}
+			.connection {
+			    stroke: #656565;
+			    stroke-width: 1;
+			    fill: none;
+			    stroke-linejoin: round;
+			}
+			.connection:hover {
+			    stroke: #ff5757;
+			    stroke-width: 3;
+			}
+			.option-port {
+				stroke:#c7c7c7;
+			    r:5;
+			    fill:#fff;			    
+			}
+			.option-port:hover {
+				cursor: pointer;
+				fill: #2083cf;
+				r:10;
+			}
+			.control-box {
+				vertical-align: top;
+				width: 25%;
+				height: 100%;
+				display: inline-block;
+				background-color: #f3f4f5;
+				font-size: 14px;
+				overflow: auto;
+				overflow-x: hidden;
+				border-left: 2px solid #ddd;
+			}
+			/*弹框*/
+			.alert-bgn {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0,0,0,.2);
+				display: none;
+			}
+			.alert-box {
+				margin: 120px auto 0 auto;
+			    padding: 10px;
+			    width: 560px;
+			    text-align: center;
+			    background-color: #fff;
+			    font-size: 18px;
+			    border-radius: 5px;
+			    box-shadow: 1px 1px 7px 0 #717171;
+			}
+			.alert-box-title {
+			    width: 100%;
+			}
+			.alert-box-body {
+				margin: 20px auto;
+				width: 100%;
+			}
+			.alert-box-input {
+				width: 60%;
+			    border: none;
+			    height: 30px;
+			    font-size: 18px;
+			    text-align: center;
+			    color: #1b98f7;
+			    border-bottom: 1px solid #ddd;
+			}
+			.alert-box-footer {
+				width: 100%;
+			}
+			.alert-box-bnt {
+				display: inline-block;
+			    margin: 0 20px;
+			    padding: 5px 10px;
+			    background-color: #e4e0d3;
+			    border-radius: 3px;
+			    box-shadow: 1px 1px 1px 0 #b1b1b1;
+			}
+			.alert-box-bnt:hover {
+				opacity: .8;
+				cursor: pointer;
+			}
+			/*弹框-end*/
+			.create-bgn {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(255,255,255,.6);
+				display: none;
+			}
+		</style>
+
+	</head>
+	<body>
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svgPanel" width="75%" height="100%"></svg>
+		<div class="control-box">
+			<div class="alert-box-bnt" style="margin: 10px 30%;background-color: #36a7fd;color: #fff;" onclick="geneJson('svgPanel')">生成json</div>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="100%" height="70%">
+				<g id="cell_style1" class="cell demo" transform="translate(20,50)">
+					<rect class="cell-border"></rect>
+					<text class="cell-text">处理单元1</text>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,110,40)"></circle>
+				</g>
+				<g id="cell_style2" class="cell demo" transform="translate(20,150)">
+					<rect class="cell-border"></rect>
+					<text class="cell-text">处理单元2</text>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,110,0)"></circle>
+				</g>
+				<g id="cell_style3" class="cell demo" transform="translate(20,250)">
+					<rect class="cell-border"></rect>
+					<text class="cell-text">处理单元3</text>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,110,0)"></circle>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,110,40)"></circle>
+				</g>
+				<g id="cell_style4" class="cell demo" transform="translate(20,350)">
+					<rect class="cell-border"></rect>
+					<text class="cell-text">处理单元4</text>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,75,0)"></circle>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,150,0)"></circle>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,110,40)"></circle>
+				</g>
+				<g id="cell_style5" class="cell demo" transform="translate(20,450)">
+					<rect class="cell-border"></rect>
+					<text class="cell-text">处理单元5</text>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,75,0)"></circle>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,150,0)"></circle>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,75,40)"></circle>
+					<circle class="option-port demo" transform="matrix(1,0,0,1,150,40)"></circle>
+				</g>
+			</svg>
+		</div>
+		<div id="alert-bgn" class="alert-bgn">
+			<div class="alert-box">
+				<p class="alert-box-title">修改名称</p>
+				<p class="alert-box-body">
+					<input id="alert-box-input" class="alert-box-input" type="text" placeholder="请输入计算单元名称">
+				</p>
+				<p class="alert-box-footer">
+					<div id="alert-box-confirm" class="alert-box-bnt">确定</div>
+					<div id="alert-box-cancel" class="alert-box-bnt">取消</div>
+				</p>
+			</div>
+		</div>
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="create_bgn" width="100%" height="100%" class="create-bgn">
+		</svg>
+	</body>
+</html>
+
+<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/cell.js"></script>
+<script type="text/javascript" src="js/create_cell.js"></script>
+<script type="text/javascript" src="js/create_line.js"></script>
+<script type="text/javascript" src="js/drag_cell.js"></script>
+<script type="text/javascript" src="js/rename_cell.js"></script>
+<script type="text/javascript" src="js/gene_json.js"></script>
